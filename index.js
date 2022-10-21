@@ -32,14 +32,22 @@ app.get('/html', (req, res) => {
 })
 
 app.get('/books', (req, res) => {
-    res.send(books.filter(i => i.favorito))
+    res.send(books)
 })
 
 
 app.post('/books', (req, res) => {
-    books.push(req.body)
+// O body contém a lista que é enviada
+    const body = req.body
+    console.log('body', body)
 
-    res.send(req.body)
+// percorrer a lista
+    body.map(obj => books.push(obj))
+
+
+    
+    res.send(books)
+
 
 })
 
@@ -54,5 +62,17 @@ app.get('/books/:id', (req, res) => {
         res.status(404)
 })
 
+
+app.delete('/books/:id', (req, res) => {
+    let id = req.params.id
+    let index = books.findIndex(obj => obj._id === id)
+
+
+    books.splice(index, 1)
+
+    res.send(books)
+
+
+})
 
 app.listen(port, hostname, () => console.log(`http://${hostname}:${port}`))
