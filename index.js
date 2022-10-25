@@ -52,7 +52,7 @@ app.post('/books', (req, res) => {
 })
 
 app.get('/books/:id', (req, res) => {
-    const book = books.find((book) => book._id == req.params.id)
+    const book = books.find((book) => book._id === req.params.id)
 
 
     if (book)
@@ -65,14 +65,37 @@ app.get('/books/:id', (req, res) => {
 
 app.delete('/books/:id', (req, res) => {
     let id = req.params.id
-    let index = books.findIndex(obj => obj._id === id)
+    let index = books.findIndex(obj => obj._id === parseInt(id))
+
+    console.log('index', index)
 
 
     books.splice(index, 1)
 
     res.send(books)
-
-
 })
+
+
+app.patch('/books/:id', (req, res) => {
+  let id = parseInt(req.params.id)
+
+    
+  let book = books.find(obj => obj._id === id)
+  console.log('book', book)
+
+
+  let body = req.body
+  console.log('body', body)
+
+  book.title = body.title
+
+  book.autor = body.autor
+
+  res.send(books)
+})
+
+
+
+
 
 app.listen(port, hostname, () => console.log(`http://${hostname}:${port}`))
