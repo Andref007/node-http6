@@ -1,5 +1,11 @@
 const express = require('express')
 
+const db = require('./db/dbconfig')
+
+db.once('open', () => {
+    console.log('Conexão realizada com sucesso!')
+})
+
 
 const app = express()
 
@@ -11,7 +17,6 @@ const books = [
     { _id: 2, title: "O mundo de Sophia", autor: "Jostein Gaarden", favorito: true },
     { _id: 3, title: "A Casa", autor: "Raquel de Queiroz", favorito: false }
 ]
-
 
 app.use(
     express.urlencoded({
